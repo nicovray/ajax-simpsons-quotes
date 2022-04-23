@@ -6,9 +6,10 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1, shrink-to-fit=no"
 		/>
+		<link rel="stylesheet" href="style.css" />
 
 		<title>Ajax quest challenge</title>
-		<link rel="icon" type="image/png" href="favicon.png" />
+		<link rel="icon" type="image/png" href="assets/Homer.ico" />
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
@@ -23,15 +24,19 @@
 			integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
 			crossorigin="anonymous"
 		/>
-		<style></style>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
 	</head>
 
 	<body>
 		<section class="section">
 			<div class="container">
 				<h1 class="title">Simpson API</h1>
-
-				<div class="content" id="simpson"></div>
+				<div class="content" id="simpson">
+				</div>
+				<button type="button" id="newButton">New quote</button>
 			</div>
 		</section>
 
@@ -42,25 +47,29 @@
 			crossorigin="anonymous"
 		></script>
 		<script>
-            function fetchSimpsonQuoteJSON() {
-                const url = `https://simpsons-quotes-api.herokuapp.com/quotes/`;
-                axios.get(url)
-                .then(function(response) {
-                    return response.data;
-                })
-                .then(function(simpson) {
-                   console.log('data decoded from JSON:', simpson);
-                   const simpsonHtml = `<p><strong>${simpson[0].character}</strong></p>
-                      					<img src="${simpson[0].image}" />
-                      					<p><strong>${simpson[0].quote}</strong></p>
-                      					<button id="myBtn">Click ici pour une nouvelle citation !</button>`;
-                    document.querySelector('#simpson').innerHTML = simpsonHtml;
-                    const element = document.getElementById("myBtn");
-                    element.addEventListener("click", fetchSimpsonQuoteJSON);
-                });
-            }
+			function fetchSimpsonsJSON() {
 
-                fetchPokemonJSON();
-        </script>
+			  const url = `https://simpsons-quotes-api.herokuapp.com/quotes`;
+			  axios.get(url)
+				.then(function(response) {
+				  return response.data[0]; 
+				})
+				.then(function(simpson) {
+				  console.log('data decoded from JSON:', simpson);
+			
+				  const simpsonHtml = `
+					<p><strong>${simpson.character}</strong></p>
+					<img src="${simpson.image}" />
+					<p>${simpson.quote}</p>
+				  `;
+				  document.querySelector('#simpson').innerHTML = simpsonHtml;
+				});
+
+			}
+			fetchSimpsonsJSON();
+
+			const button = document.getElementById('newButton');
+			button.addEventListener('click', fetchSimpsonsJSON);
+		</script>
 	</body>
 </html>
