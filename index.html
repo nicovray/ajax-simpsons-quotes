@@ -43,36 +43,22 @@
 		></script>
 		<script>
             function fetchSimpsonQuoteJSON() {
-
-               const url = `https://simpsons-quotes-api.herokuapp.com/quotes/`;
-
+                const url = `https://simpsons-quotes-api.herokuapp.com/quotes/`;
                 axios.get(url)
-
                 .then(function(response) {
-
                     return response.data;
-
                 })
-
                 .then(function(simpson) {
-
-                    console.log('data decoded from JSON:', simpson);
-
-                
-                    const simpsonHtml = `
-
-                      <p><strong>${simpson[0].character}</strong></p>
-                      <img src="${simpson[0].image}" />
-                      <p><strong>${simpson[0].quote}</strong></p>
-                      <button id="myBtn">Click ici pour une nouvelle citation !</button>
-                    `;
-
+                   console.log('data decoded from JSON:', simpson);
+                   const simpsonHtml = `<p><strong>${simpson[0].character}</strong></p>
+                      					<img src="${simpson[0].image}" />
+                      					<p><strong>${simpson[0].quote}</strong></p>
+                      					<button id="myBtn">Click ici pour une nouvelle citation !</button>`;
                     document.querySelector('#simpson').innerHTML = simpsonHtml;
                     const element = document.getElementById("myBtn");
                     element.addEventListener("click", fetchSimpsonQuoteJSON);
                 });
-
-                }
+            }
 
                 fetchPokemonJSON();
         </script>
